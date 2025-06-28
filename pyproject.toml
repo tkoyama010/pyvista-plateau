@@ -1,4 +1,3 @@
-# Add plateaukit[all] to dependencies to enable all features AI!
 [project]
 name = "pyvista-plateau"
 version = "0.1.0"
@@ -9,6 +8,7 @@ dependencies = [
     "pyvista>=0.43.0",
     "numpy>=1.24.0",
     "scipy>=1.10.0",
+    "plateaukit[all]>=0.18.0",
 ]
 
 [project.optional-dependencies]
