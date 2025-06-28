@@ -1,69 +1,18 @@
 import json
 from pyvista_plateau import convert_to_pyvista, filter_by_height, plot_mesh
 
-# Create a simple demo GeoJSON dataset with building data
-demo_geojson = {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [[
-                    [139.7, 35.6, 0],
-                    [139.7, 35.601, 0],
-                    [139.701, 35.601, 0],
-                    [139.701, 35.6, 0],
-                    [139.7, 35.6, 0]
-                ]]
-            },
-            "properties": {
-                "measuredHeight": 50.0,
-                "name": "Building 1"
-            }
-        },
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [[
-                    [139.702, 35.6, 0],
-                    [139.702, 35.601, 0],
-                    [139.703, 35.601, 0],
-                    [139.703, 35.6, 0],
-                    [139.702, 35.6, 0]
-                ]]
-            },
-            "properties": {
-                "measuredHeight": 25.0,
-                "name": "Building 2"
-            }
-        },
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [[
-                    [139.704, 35.6, 0],
-                    [139.704, 35.601, 0],
-                    [139.705, 35.601, 0],
-                    [139.705, 35.6, 0],
-                    [139.704, 35.6, 0]
-                ]]
-            },
-            "properties": {
-                "measuredHeight": 75.0,
-                "name": "Building 3"
-            }
-        }
-    ]
-}
+from plateaukit import load_dataset
 
+dataset = load_dataset("plateau-tokyo23ku-2022")
+
+area = dataset.area_from_landmark("田町駅")
+
+area.show()
 print("Creating demo dataset...")
 
 # Convert demo data to PyVista mesh
 print("Converting to PyVista mesh...")
-mesh = convert_to_pyvista(demo_geojson)
+mesh = convert_to_pyvista(dataset)
 
 # Filter buildings taller than 30 meters
 print("Filtering buildings by height...")
