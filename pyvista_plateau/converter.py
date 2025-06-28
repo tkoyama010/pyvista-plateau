@@ -4,22 +4,29 @@ import plateaukit as pk
 from typing import Union
 
 
-def convert_to_pyvista(dataset) -> pv.PolyData:
+def convert_to_pyvista(data) -> pv.PolyData:
     """
-    Convert a PlateauKit dataset to a PyVista mesh.
+    Convert GeoJSON or PlateauKit data to a PyVista mesh.
     
     Parameters
     ----------
-    dataset : plateaukit dataset
-        The PLATEAU dataset to convert
+    data : dict or plateaukit dataset
+        The data to convert (GeoJSON dict or PLATEAU dataset)
         
     Returns
     -------
     pv.PolyData
         PyVista mesh representation of the dataset
     """
-    # Convert dataset to GeoJSON first
-    geojson_data = pk.convert.to_geojson(dataset)
+    # Handle different input types
+    if isinstance(data, dict):
+        geojson_data = data
+    else:
+        # Try to convert using PlateauKit
+        try:
+            geojson_data = pk.convert.to_geojson(data)
+        except:
+            raise ValueError("Unable to convert input data to GeoJSON format")
     
     # Extract building geometries and create mesh
     points = []
