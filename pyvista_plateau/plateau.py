@@ -1,5 +1,5 @@
 """
-PyVista Plateau - A package for plateau functionality with PyVista
+Core plateau functionality for PyVista meshes.
 """
 
 import pyvista as pv
@@ -63,44 +63,3 @@ def create_simple_plateau():
     """Create and return a simple plateau mesh."""
     plateau = PlateauMesh()
     return plateau.create_plateau()
-
-
-def demo():
-    """Run a demonstration of the plateau functionality."""
-    print("Creating PyVista Plateau demo...")
-    
-    # Create a plateau
-    plateau = PlateauMesh()
-    mesh = plateau.create_plateau(width=15, height=15, plateau_height=3)
-    
-    # Add some noise for realism
-    plateau.add_noise(amplitude=0.2)
-    
-    # Smooth the surface
-    plateau.smooth_plateau(iterations=50)
-    
-    print(f"Created plateau mesh with {mesh.n_points} points and {mesh.n_cells} cells")
-    
-    # Visualize (commented out for non-interactive environments)
-    # plateau.visualize()
-    
-    return plateau
-
-
-def main():
-    """Main entry point for the package."""
-    print("PyVista Plateau Package")
-    print("======================")
-    print("A package for creating and manipulating plateau-like mesh structures with PyVista")
-    print("\nExample usage:")
-    print("from main import PlateauMesh")
-    print("plateau = PlateauMesh()")
-    print("mesh = plateau.create_plateau()")
-    print("plateau.visualize()")
-    
-    # Run demo
-    demo()
-
-
-if __name__ == "__main__":
-    main()
