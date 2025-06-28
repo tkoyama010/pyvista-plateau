@@ -1,13 +1,15 @@
 # PyVista Plateau
 
-A Python package for loading, filtering, and visualizing CityGML building data using PyVista.
+A Python package that combines PyVista 3D visualization with PlateauKit for working with MLIT Project PLATEAU 3D city models.
 
 ## Features
 
-- Load CityGML files containing building data
+- Load PLATEAU CityGML datasets using PlateauKit
+- Convert CityGML to PyVista meshes for 3D visualization
 - Filter buildings by height and other criteria
 - Create and manipulate plateau-like mesh structures
-- 3D visualization of urban building models
+- Interactive 3D visualization of urban building models
+- Support for PLATEAU dataset management and conversion
 
 ## Installation
 
@@ -15,13 +17,23 @@ A Python package for loading, filtering, and visualizing CityGML building data u
 pip install pyvista-plateau
 ```
 
+This package depends on:
+- `plateaukit[all]` - For PLATEAU data handling and CityGML processing
+- `pyvista` - For 3D mesh visualization
+- `numpy` - For numerical operations
+
 ## Quick Start
 
 ```python
-from pyvista_plateau import load_citygml, filter_by_height, plot_mesh
+import plateaukit as pk
+from pyvista_plateau import convert_to_pyvista, filter_by_height, plot_mesh
 
-# Load CityGML data
-mesh = load_citygml("Tokyo_23ku_Building.gml")
+# Install and load PLATEAU dataset
+pk.datasets.install("tokyo23ku")
+dataset = pk.datasets.load("tokyo23ku")
+
+# Convert to PyVista mesh
+mesh = convert_to_pyvista(dataset)
 
 # Filter buildings by minimum height
 filtered = filter_by_height(mesh, min_height=30)
@@ -32,4 +44,11 @@ plot_mesh(filtered, title="Tokyo Buildings > 30m")
 
 ## Examples
 
-See the `examples/` directory for more detailed usage examples.
+See the `examples/` directory for more detailed usage examples including:
+- Loading Tokyo building data from PLATEAU datasets
+- Filtering and visualizing urban structures
+- Creating custom plateau meshes
+
+## About PLATEAU
+
+This package leverages the [MLIT Project PLATEAU](https://www.mlit.go.jp/plateau/) 3D city model datasets through the excellent [PlateauKit](https://github.com/ozekik/plateaukit) library. PLATEAU provides high-quality 3D city models for Japanese cities.
