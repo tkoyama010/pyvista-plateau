@@ -1,1 +1,3 @@
 .aider*
+examples/.ipynb_checkpoints/
+pyvista_plateau/__pycache__/
