@@ -24,9 +24,25 @@ def convert_to_pyvista(data) -> pv.PolyData:
     else:
         # Try to convert using PlateauKit
         try:
-            geojson_data = pk.convert.to_geojson(data)
-        except:
-            raise ValueError("Unable to convert input data to GeoJSON format")
+            import tempfile
+            import json
+            
+            # Export dataset to temporary GeoJSON file
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.geojson', delete=False) as tmp:
+                tmp_path = tmp.name
+            
+            # Export building data to GeoJSON
+            data.to_geojson(tmp_path, types=['bldg'])
+            
+            # Load the GeoJSON data
+            with open(tmp_path, 'r') as f:
+                geojson_data = json.load(f)
+            
+            # Clean up temp file
+            import os
+            os.unlink(tmp_path)
+        except Exception as e:
+            raise ValueError(f"Unable to convert input data to GeoJSON format: {str(e)}")
     
     # Extract building geometries and create mesh
     points = []
