@@ -34,7 +34,14 @@ class PlateauMesh:
         if self.mesh is None:
             raise ValueError("No mesh available. Create or load a mesh first.")
         
-        self.mesh = self.mesh.smooth(n_iter=iterations)
+        # Convert to PolyData for smoothing if it's a StructuredGrid
+        if hasattr(self.mesh, 'extract_surface'):
+            poly_mesh = self.mesh.extract_surface()
+        else:
+            poly_mesh = self.mesh
+        
+        # Apply smoothing
+        self.mesh = poly_mesh.smooth(n_iter=iterations)
         return self.mesh
     
     def add_noise(self, amplitude=0.1):
