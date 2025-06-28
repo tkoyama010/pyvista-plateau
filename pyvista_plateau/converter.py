@@ -44,12 +44,12 @@ def convert_to_pyvista(data) -> pv.PolyData:
             
             # Get building height from properties
             height = properties.get('measuredHeight', 10.0)  # Default 10m if not specified
-            heights.extend([height] * len(coords))
             
             # Create base points (ground level)
             base_points = []
             for coord in coords[:-1]:  # Skip last point (same as first)
                 points.append([coord[0], coord[1], 0.0])
+                heights.append(height)  # Add height for each point
                 base_points.append(point_offset)
                 point_offset += 1
             
@@ -57,6 +57,7 @@ def convert_to_pyvista(data) -> pv.PolyData:
             top_points = []
             for coord in coords[:-1]:
                 points.append([coord[0], coord[1], height])
+                heights.append(height)  # Add height for each point
                 top_points.append(point_offset)
                 point_offset += 1
             
